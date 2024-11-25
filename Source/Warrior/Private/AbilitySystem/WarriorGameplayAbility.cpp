@@ -5,6 +5,11 @@
 
 #include "AbilitySystemComponent.h"
 
+UPawnCombatComponent* UWarriorGameplayAbility::GetPawnCombatComponentFromActorInfo() const
+{
+	return  GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
+}
+
 void UWarriorGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo,
                                             const FGameplayAbilitySpec& Spec)
 {

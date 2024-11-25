@@ -3,6 +3,8 @@
 
 #include "Components/Combat/PawnCombatComponent.h"
 
+#include "WarriorDebugHelper.h"
+
 
 // Sets default values for this component's properties
 UPawnCombatComponent::UPawnCombatComponent()
@@ -14,6 +16,44 @@ UPawnCombatComponent::UPawnCombatComponent()
 	// ...
 }
 
+void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegister,
+                                                 AWarriorWeaponBase* InWeaponToRegister, bool bRegisterAsEquippedWeapon)
+{
+	checkf(!CharacterCarriedWeapons.Contains(InWeaponTagToRegister),
+	       TEXT("A named named %s has already been added as carried weapon"), *InWeaponTagToRegister.ToString());
+	check(InWeaponToRegister);
+
+	CharacterCarriedWeapons.Emplace(InWeaponTagToRegister, InWeaponToRegister);
+	if (bRegisterAsEquippedWeapon)
+	{
+		CurrentEquippedWeaponTag = InWeaponTagToRegister;
+	}
+
+	const FString WeaponString = FString::Printf(TEXT("A weapon named: %s has been registered using the tag %s "), *InWeaponToRegister->GetName(), *InWeaponTagToRegister.ToString());
+	Debug::Print(WeaponString);
+}
+
+AWarriorWeaponBase* UPawnCombatComponent::GetCharacterCarriedWeaponByTag(FGameplayTag GameplayTag) const
+{
+	if (CharacterCarriedWeapons.Contains(GameplayTag))
+	{
+		if (AWarriorWeaponBase* const* FoundWeapon = CharacterCarriedWeapons.Find(GameplayTag))
+		{
+			return *FoundWeapon;
+		}
+	}
+	return nullptr;
+}
+
+AWarriorWeaponBase* UPawnCombatComponent::GetCharacterCurrentEquippedWeapon() const
+{
+	if (!CurrentEquippedWeaponTag.IsValid())
+	{
+		return nullptr;
+	}
+	return  GetCharacterCarriedWeaponByTag(CurrentEquippedWeaponTag);
+}
+
 
 // Called when the game starts
 void UPawnCombatComponent::BeginPlay()
@@ -21,7 +61,6 @@ void UPawnCombatComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
 }
 
 
@@ -33,4 +72,3 @@ void UPawnCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 	// ...
 }
-
