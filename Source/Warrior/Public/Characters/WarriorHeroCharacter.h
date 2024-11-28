@@ -51,6 +51,9 @@ private:
 	void Input_Move(const FInputActionValue& InputActionValue);
 	void Input_Look(const FInputActionValue& InputActionValue);
 
+	void Input_AbilityInputPressed(const FGameplayTag InGameplayTag);
+	void Input_AbilityInputReleased(const FGameplayTag InGameplayTag);
+
 #pragma endregion Components
 
 public:

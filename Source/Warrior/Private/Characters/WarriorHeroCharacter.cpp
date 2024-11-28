@@ -93,6 +93,15 @@ void AWarriorHeroCharacter::Input_Look(const FInputActionValue& InputActionValue
 {
 }
 
+void AWarriorHeroCharacter::Input_AbilityInputPressed(const FGameplayTag InGameplayTag)
+{
+	WarriorAbilitySystemComponent->OnAbilityInputPressed(InGameplayTag);
+}
+
+void AWarriorHeroCharacter::Input_AbilityInputReleased(const FGameplayTag InGameplayTag)
+{
+}
+
 // Called every frame
 void AWarriorHeroCharacter::Tick(float DeltaTime)
 {
@@ -114,4 +123,6 @@ void AWarriorHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	UWarriorInputComponent* WarriorInputComponent = CastChecked<UWarriorInputComponent>(PlayerInputComponent);
 	WarriorInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Move,
 	                                      ETriggerEvent::Triggered, this, &AWarriorHeroCharacter::Input_Move);
+
+	WarriorInputComponent->BindAbilityInputAction(InputConfigDataAsset,this, &AWarriorHeroCharacter::Input_AbilityInputPressed, &AWarriorHeroCharacter::Input_AbilityInputReleased);
 }
