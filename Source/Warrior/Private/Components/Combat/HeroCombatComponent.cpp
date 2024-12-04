@@ -3,6 +3,8 @@
 
 #include "Components/Combat/HeroCombatComponent.h"
 
+#include "Items/Weapon/WarriorHeroWeapon.h"
+
 
 // Sets default values for this component's properties
 UHeroCombatComponent::UHeroCombatComponent()
@@ -22,6 +24,11 @@ void UHeroCombatComponent::BeginPlay()
 
 	// ...
 	
+}
+
+AWarriorHeroWeapon* UHeroCombatComponent::GetHeroCarriedWeaponByTag(FGameplayTag InGameplayTag) const
+{
+	return Cast<AWarriorHeroWeapon>(GetCharacterCarriedWeaponByTag(InGameplayTag));
 }
 
 

@@ -6,6 +6,7 @@
 #include "PawnCombatComponent.h"
 #include "HeroCombatComponent.generated.h"
 
+class AWarriorHeroWeapon;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class WARRIOR_API UHeroCombatComponent : public UPawnCombatComponent
@@ -21,6 +22,9 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	UFUNCTION(BlueprintCallable, Category = "Warrior|Combat")
+	AWarriorHeroWeapon* GetHeroCarriedWeaponByTag(FGameplayTag InGameplayTag) const;
+	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
