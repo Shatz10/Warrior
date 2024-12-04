@@ -2,7 +2,6 @@
 .vs/
 Build/
 Binaries/
-Content/
 DerivedDataCache/
 Intermediate/
 Saved/
@@ -12,3 +11,7 @@ ECR.png
 *.user
 __pycache__/
 Releases/
+/Content/__ExternalActors__/
+/Content/__ExternalObjects__/
+/Content/Assets/
+/Content/ThirdPerson/
